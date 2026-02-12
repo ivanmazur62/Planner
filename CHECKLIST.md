@@ -9,9 +9,9 @@
 ### Фаза 1 — Ядро
 
 - [x] **1.1** Створити solution structure (Planner.sln, проекти)
-- [ ] **1.2** Planner.Core — сутності Plan, PlanTask та інтерфейси репозиторіїв
+- [x] **1.2** Planner.Core — сутність PlannerTask та інтерфейс IPlannerTaskRepository
 - [ ] **1.3** Planner.Infrastructure — EF Core, PostgreSQL, DbContext, репозиторії
-- [ ] **1.4** Planner.Services — сервіси для планів і задач
+- [ ] **1.4** Planner.Services — сервіси для задач
 - [ ] **1.5** Planner.API — REST контролери, Swagger
 - [ ] **1.6** Docker Compose для PostgreSQL
 - [ ] **1.7** EF міграції, підключення до БД
@@ -51,7 +51,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Додати project references (якщо ще не зроблено) → Фаза 1.2 — Planner.Core.
+**Що робити зараз:** Фаза 1.3 — Planner.Infrastructure (EF Core, DbContext, PlannerTaskRepository).
 
 ---
 
@@ -61,6 +61,7 @@
 - [x] `.gitignore` для .NET
 - [x] Очищення структури проєкту
 - [x] Solution structure (Planner.sln, 5 проєктів у src/ та tests/)
+- [x] Planner.Core — PlannerTask, IPlannerTaskRepository
 
 ---
 
