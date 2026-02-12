@@ -1,4 +1,4 @@
-@Planner.API_HostAddress = http://localhost:5126
+@Planner.API_HostAddress = http://localhost:5147
 
 GET {{Planner.API_HostAddress}}/weatherforecast/
 Accept: application/json
