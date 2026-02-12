@@ -13,7 +13,7 @@
 - [x] **1.3** Planner.Infrastructure — EF Core, PostgreSQL, DbContext, репозиторії
 - [x] **1.4** Planner.Services — сервіси для задач
 - [x] **1.5** Planner.API — REST контролери, Swagger
-- [ ] **1.6** Docker Compose для PostgreSQL
+- [x] **1.6** Docker Compose для PostgreSQL
 - [ ] **1.7** EF міграції, підключення до БД
 - [ ] **1.8** Planner.API.Tests — базові юніт-тести
 
@@ -51,7 +51,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 1.6 — Docker Compose для PostgreSQL.
+**Що робити зараз:** Фаза 1.7 — EF міграції, підключення до БД.
 
 ---
 
@@ -65,6 +65,7 @@
 - [x] Planner.Infrastructure — ApplicationDbContext, PlannerTaskRepository
 - [x] Planner.Services — IPlannerTaskService, PlannerTaskService
 - [x] Planner.API — PlannerTasksController, DI, Swagger, REST ендпоінти
+- [x] Docker Compose — PostgreSQL 16 для локальної розробки
 
 ---
 
