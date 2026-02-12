@@ -20,7 +20,7 @@
 ### Фаза 2 — Авторизація
 
 - [x] **2.1** ASP.NET Core Identity
-- [ ] **2.2** JWT автентифікація
+- [x] **2.2** JWT автентифікація
 - [ ] **2.3** Google OAuth
 
 ### Фаза 3 — Web UI
@@ -51,7 +51,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.2 — JWT автентифікація.
+**Що робити зараз:** Фаза 2.3 — Google OAuth.
 
 ---
 
@@ -69,6 +69,7 @@
 - [x] EF міграції — InitialCreate, таблиця PlannerTasks
 - [x] Planner.API.Tests — PlannerTaskService unit tests (xUnit, Moq)
 - [x] ASP.NET Core Identity — ApplicationUser, таблиці AspNet*
+- [x] JWT автентифікація — AuthController, [Authorize], Swagger Bearer
 
 ---
 

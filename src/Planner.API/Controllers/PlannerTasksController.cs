@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Planner.Core.Entities;
 using Planner.Services.Interfaces;
 
 namespace Planner.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class PlannerTasksController(IPlannerTaskService service) : ControllerBase
