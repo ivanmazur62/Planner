@@ -11,7 +11,7 @@
 - [x] **1.1** Створити solution structure (Planner.sln, проекти)
 - [x] **1.2** Planner.Core — сутність PlannerTask та інтерфейс IPlannerTaskRepository
 - [x] **1.3** Planner.Infrastructure — EF Core, PostgreSQL, DbContext, репозиторії
-- [ ] **1.4** Planner.Services — сервіси для задач
+- [x] **1.4** Planner.Services — сервіси для задач
 - [ ] **1.5** Planner.API — REST контролери, Swagger
 - [ ] **1.6** Docker Compose для PostgreSQL
 - [ ] **1.7** EF міграції, підключення до БД
@@ -51,7 +51,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 1.4 — Planner.Services (IPlannerTaskService, PlannerTaskService).
+**Що робити зараз:** Фаза 1.5 — Planner.API (контролери, DI, Swagger).
 
 ---
 
@@ -63,6 +63,7 @@
 - [x] Solution structure (Planner.sln, 5 проєктів у src/ та tests/)
 - [x] Planner.Core — PlannerTask, IPlannerTaskRepository
 - [x] Planner.Infrastructure — ApplicationDbContext, PlannerTaskRepository
+- [x] Planner.Services — IPlannerTaskService, PlannerTaskService
 
 ---
 

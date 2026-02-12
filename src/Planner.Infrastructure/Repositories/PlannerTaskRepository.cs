@@ -27,20 +27,18 @@ public sealed class PlannerTaskRepository(ApplicationDbContext context) : IPlann
         return await context.PlannerTasks.Where(x => !x.IsCompleted).ToListAsync(cancellationToken);
     }
 
-    public async Task<PlannerTask> AddAsync(PlannerTask task, CancellationToken cancellationToken = default)
+    public async Task<PlannerTask> AddAsync(PlannerTask plannerTask, CancellationToken cancellationToken = default)
     {
-        task.CreatedAt = DateTime.UtcNow;
-        context.PlannerTasks.Add(task);
+        context.PlannerTasks.Add(plannerTask);
         await context.SaveChangesAsync(cancellationToken);
-        return task;
+        return plannerTask;
     }
 
-    public async Task<PlannerTask> UpdateAsync(PlannerTask task, CancellationToken cancellationToken = default)
+    public async Task<PlannerTask> UpdateAsync(PlannerTask plannerTask, CancellationToken cancellationToken = default)
     {
-        task.UpdatedAt = DateTime.UtcNow;
-        context.PlannerTasks.Update(task);
+        context.PlannerTasks.Update(plannerTask);
         await context.SaveChangesAsync(cancellationToken);
-        return task;
+        return plannerTask;
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
