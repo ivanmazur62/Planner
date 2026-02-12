@@ -14,8 +14,8 @@
 - [x] **1.4** Planner.Services — сервіси для задач
 - [x] **1.5** Planner.API — REST контролери, Swagger
 - [x] **1.6** Docker Compose для PostgreSQL
-- [ ] **1.7** EF міграції, підключення до БД
-- [ ] **1.8** Planner.API.Tests — базові юніт-тести
+- [x] **1.7** EF міграції, підключення до БД
+- [x] **1.8** Planner.API.Tests — базові юніт-тести
 
 ### Фаза 2 — Авторизація
 
@@ -51,7 +51,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 1.7 — EF міграції, підключення до БД.
+**Що робити зараз:** Фаза 2.1 — ASP.NET Core Identity.
 
 ---
 
@@ -66,6 +66,8 @@
 - [x] Planner.Services — IPlannerTaskService, PlannerTaskService
 - [x] Planner.API — PlannerTasksController, DI, Swagger, REST ендпоінти
 - [x] Docker Compose — PostgreSQL 16 для локальної розробки
+- [x] EF міграції — InitialCreate, таблиця PlannerTasks
+- [x] Planner.API.Tests — PlannerTaskService unit tests (xUnit, Moq)
 
 ---
 
