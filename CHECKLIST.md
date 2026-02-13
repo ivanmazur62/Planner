@@ -30,7 +30,7 @@
 - [x] **2.4.3** DTO — PlannerTaskDto, CreatePlannerTaskRequest, UpdatePlannerTaskRequest замість entity
 - [x] **2.4.4** Валідація — DataAnnotations або FluentValidation для Request-моделей
 - [x] **2.4.5** IJwtService — винесення генерації JWT з AuthController в окремий сервіс
-- [ ] **2.4.6** Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо для Program.cs
+- [x] **2.4.6** Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо для Program.cs
 - [ ] **2.4.7** Exception handler — глобальна обробка помилок, ProblemDetails
 - [ ] **2.4.8** Health checks — `/health` для PostgreSQL
 - [ ] **2.4.9** Логування — ILogger у сервісах та контролерах, структуровані повідомлення
@@ -66,7 +66,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.4.6 — Extension methods (потім 2.4.7 Exception handler…).
+**Що робити зараз:** Фаза 2.4.7 — Exception handler (потім 2.4.8 Health checks…).
 
 ---
 
@@ -90,6 +90,7 @@
 - [x] DTO — PlannerTaskDto, CreatePlannerTaskRequest, UpdatePlannerTaskRequest
 - [x] Валідація — FluentValidation для Request-моделей
 - [x] IJwtService — винесення генерації JWT в окремий сервіс
+- [x] Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо
 - [x] UserId — ICurrentUserService, прив’язка задач до користувача, фільтрація в репозиторії
 
 ---
