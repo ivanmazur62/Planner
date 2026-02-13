@@ -17,7 +17,7 @@ namespace Planner.API.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/auth")]
 public class AuthController(
     UserManager<ApplicationUser> userManager, 
     IJwtService jwtService,

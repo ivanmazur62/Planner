@@ -10,7 +10,7 @@ namespace Planner.API.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/planner-tasks")]
 public class PlannerTasksController(IPlannerTaskService service, ILogger<PlannerTasksController> logger) : ControllerBase
 {
     [HttpGet]

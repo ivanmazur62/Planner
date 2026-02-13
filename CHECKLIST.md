@@ -34,7 +34,7 @@
 - [x] **2.4.7** Exception handler — глобальна обробка помилок, ProblemDetails
 - [x] **2.4.8** Health checks — `/health` для PostgreSQL
 - [x] **2.4.9** Логування — ILogger у сервісах та контролерах, структуровані повідомлення
-- [ ] **2.4.10** Маршрути — явні `[Route("api/...")]`, lowercase URLs
+- [x] **2.4.10** Маршрути — явні `[Route("api/...")]`, lowercase URLs
 - [ ] **2.4.11** CORS — налаштування для Blazor-клієнта
 - [ ] **2.4.12** Unit of Work — опційно, для складних транзакцій
 
@@ -66,7 +66,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.4.10 — Маршрути (потім 2.4.11 CORS…).
+**Що робити зараз:** Фаза 2.4.11 — CORS (перед Blazor).
 
 ---
 
@@ -94,6 +94,7 @@
 - [x] Exception handler — глобальна обробка помилок, ProblemDetails
 - [x] Health checks — `/health` для PostgreSQL
 - [x] Логування — ILogger у PlannerTaskService, AuthController
+- [x] Маршрути — api/planner-tasks, api/auth, lowercase URLs
 - [x] UserId — ICurrentUserService, прив’язка задач до користувача, фільтрація в репозиторії
 
 ---

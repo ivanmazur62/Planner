@@ -2,6 +2,8 @@ using Planner.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddPlannerDataProtection();
 builder.Services.AddPlannerDbContext(builder.Configuration);
