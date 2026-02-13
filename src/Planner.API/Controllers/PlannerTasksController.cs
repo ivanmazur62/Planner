@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Planner.API.Models.DTOs;
+using Planner.API.Models.Mappings;
+using Planner.API.Models.Requests;
 using Planner.Core.Entities;
 using Planner.Services.Interfaces;
 
@@ -11,36 +14,36 @@ namespace Planner.API.Controllers;
 public class PlannerTasksController(IPlannerTaskService service) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<PlannerTask>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<PlannerTaskDto>>> GetAll(CancellationToken cancellationToken)
     {
-        var tasks = await service.GetAllAsync(cancellationToken);
-        return Ok(tasks);
+        var plannerTasks = await service.GetAllAsync(cancellationToken);
+        return Ok(plannerTasks.Select(t => t.ToDto()));
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<PlannerTask>> GetById(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<PlannerTaskDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
-        var task = await service.GetByIdAsync(id, cancellationToken);
-        if (task == null)
+        var plannerTasks = await service.GetByIdAsync(id, cancellationToken);
+        if (plannerTasks == null)
             return NotFound();
-        return Ok(task);
+        return Ok(plannerTasks.ToDto());
     }
 
     [HttpPost]
-    public async Task<ActionResult<PlannerTask>> Create([FromBody] PlannerTask? task, CancellationToken cancellationToken)
+    public async Task<ActionResult<PlannerTaskDto>> Create([FromBody] CreatePlannerTaskRequest? request, CancellationToken cancellationToken)
     {
-        if(task == null)
+        if(request == null)
             return BadRequest();
         
-        var created = await service.CreateAsync(task, cancellationToken);
-        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+        var created = await service.CreateAsync(request.ToEntity(), cancellationToken);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToDto());
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var task = await service.GetByIdAsync(id, cancellationToken);
-        if(task == null)
+        var plannerTasks = await service.GetByIdAsync(id, cancellationToken);
+        if(plannerTasks == null)
             return NotFound();
         
         await service.DeleteAsync(id, cancellationToken);
@@ -48,31 +51,41 @@ public class PlannerTasksController(IPlannerTaskService service) : ControllerBas
     }
 
     [HttpGet("completed")]
-    public async Task<ActionResult<IReadOnlyList<PlannerTask>>> GetCompleted(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<PlannerTaskDto>>> GetCompleted(CancellationToken cancellationToken)
     {
-        var tasks = await service.GetCompletedAsync(cancellationToken);
-        return Ok(tasks);
+        var plannerTasks = await service.GetCompletedAsync(cancellationToken);
+        return Ok(plannerTasks.Select(t => t.ToDto()));
     }
 
     [HttpGet("pending")]
-    public async Task<ActionResult<IReadOnlyList<PlannerTask>>> GetPending(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyList<PlannerTaskDto>>> GetPending(CancellationToken cancellationToken)
     {
-        var tasks = await service.GetPendingAsync(cancellationToken);
-        return Ok(tasks);
+        var plannerTasks = await service.GetPendingAsync(cancellationToken);
+        return Ok(plannerTasks.Select(t => t.ToDto()));
     }
 
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult<PlannerTask>> Update(Guid id, [FromBody] PlannerTask? task, CancellationToken cancellationToken)
+    public async Task<ActionResult<PlannerTaskDto>> Update(Guid id, [FromBody] UpdatePlannerTaskRequest? request, CancellationToken cancellationToken)
     {
-        if(task == null)
+        if(request == null)
             return BadRequest();
         
         var existing = await service.GetByIdAsync(id, cancellationToken);
         if (existing == null)
             return NotFound();
+
+        var plannerTask = new PlannerTask
+        {
+            Id = id,
+            UserId = existing.UserId,
+            Title = request.Title,
+            Description = request.Description,
+            DueDate = request.DueDate,
+            IsCompleted = request.IsCompleted,
+            CreatedAt = existing.CreatedAt,
+        };
         
-        task.Id = id;
-        var updated = await service.UpdateAsync(task, cancellationToken);
-        return Ok(updated);
+        var updated = await service.UpdateAsync(plannerTask, cancellationToken);
+        return Ok(updated.ToDto());
     }
 }
