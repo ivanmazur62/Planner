@@ -22,8 +22,13 @@
 # PostgreSQL
 docker compose up -d
 
+# User Secrets (обовʼязково для JWT та Google OAuth)
+cd src/Planner.API && dotnet user-secrets set "Jwt:Key" "ваш-32-символьний-ключ"
+dotnet user-secrets set "Authentication:Google:ClientId" "ваш-client-id"
+dotnet user-secrets set "Authentication:Google:ClientSecret" "ваш-client-secret"
+
 # API
-cd src/Planner.API && dotnet run
+dotnet run
 ```
 
 Swagger: `https://localhost:7055/swagger`
