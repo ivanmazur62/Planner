@@ -23,6 +23,21 @@
 - [x] **2.2** JWT автентифікація
 - [x] **2.3** Google OAuth
 
+### Фаза 2.4 — Покращення API
+
+- [x] **2.4.1** UserId — прив’язка задач до користувача, ICurrentUserService, фільтрація в репозиторії
+- [ ] **2.4.2** User Secrets — винесення JWT Key та Google ClientSecret з appsettings
+- [ ] **2.4.3** DTO — PlannerTaskDto, CreatePlannerTaskRequest, UpdatePlannerTaskRequest замість entity
+- [ ] **2.4.4** Валідація — DataAnnotations або FluentValidation для Request-моделей
+- [ ] **2.4.5** IJwtService — винесення генерації JWT з AuthController в окремий сервіс
+- [ ] **2.4.6** Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо для Program.cs
+- [ ] **2.4.7** Exception handler — глобальна обробка помилок, ProblemDetails
+- [ ] **2.4.8** Health checks — `/health` для PostgreSQL
+- [ ] **2.4.9** Логування — ILogger у сервісах та контролерах, структуровані повідомлення
+- [ ] **2.4.10** Маршрути — явні `[Route("api/...")]`, lowercase URLs
+- [ ] **2.4.11** CORS — налаштування для Blazor-клієнта
+- [ ] **2.4.12** Unit of Work — опційно, для складних транзакцій
+
 ### Фаза 3 — Web UI
 
 - [ ] **3.1** Planner.Web — Blazor WebAssembly
@@ -51,7 +66,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 3.1 — Planner.Web (Blazor WebAssembly).
+**Що робити зараз:** Фаза 2.4.2 — User Secrets (потім 2.4.3 DTO, 2.4.4 Валідація…).
 
 ---
 
@@ -71,6 +86,7 @@
 - [x] ASP.NET Core Identity — ApplicationUser, таблиці AspNet*
 - [x] JWT автентифікація — AuthController, [Authorize], Swagger Bearer
 - [x] Google OAuth — вхід через Google, JWT після callback
+- [x] UserId — ICurrentUserService, прив’язка задач до користувача, фільтрація в репозиторії
 
 ---
 

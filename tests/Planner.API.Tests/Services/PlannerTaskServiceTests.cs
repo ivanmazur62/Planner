@@ -7,20 +7,30 @@ namespace Planner.API.Tests.Services;
 
 public class PlannerTaskServiceTests
 {
+    private const string TestUserId = "test-user-id";
+
+    private static Mock<ICurrentUserService> CreateCurrentUserMock()
+    {
+        var mock = new Mock<ICurrentUserService>();
+        mock.Setup(c => c.UserId).Returns(TestUserId);
+        mock.Setup(c => c.IsAuthenticated).Returns(true);
+        return mock;
+    }
+
     [Fact]
     public async Task GetAllAsync_WhenRepositoryEmpty_ReturnEmptyList()
     {
         //Arrange
         var repository = new Mock<IPlannerTaskRepository>();
         repository
-            .Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
+            .Setup(r => r.GetAllAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<PlannerTask>());
-        
-        var service = new PlannerTaskService(repository.Object);
-        
+
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object);
+
         //Act
         var result = await service.GetAllAsync();
-        
+
         //Assert
         Assert.NotNull(result);
         Assert.Empty(result);
@@ -37,24 +47,25 @@ public class PlannerTaskServiceTests
             Title = "Test Task",
             IsCompleted = false,
             CreatedAt = DateTime.UtcNow,
+            UserId = TestUserId,
         };
-        
+
         var repository = new Mock<IPlannerTaskRepository>();
         repository
-            .Setup(r => r.GetByIdAsync(taskId, It.IsAny<CancellationToken>()))
+            .Setup(r => r.GetByIdAsync(taskId, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(expectedTask);
-        
-        var service = new PlannerTaskService(repository.Object);
-        
+
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object);
+
         //Act
         var result = await service.GetByIdAsync(taskId);
-        
+
         //Assert
         Assert.NotNull(result);
         Assert.Equal(taskId, result.Id);
         Assert.Equal(expectedTask.Title, result.Title);
     }
-    
+
     [Fact]
     public async Task GetByIdAsync_WhenTaskNotFound_ReturnsNull()
     {
@@ -62,10 +73,10 @@ public class PlannerTaskServiceTests
         var taskId = Guid.NewGuid();
         var repository = new Mock<IPlannerTaskRepository>();
         repository
-            .Setup(r => r.GetByIdAsync(taskId, It.IsAny<CancellationToken>()))
+            .Setup(r => r.GetByIdAsync(taskId, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((PlannerTask?)null);
 
-        var service = new PlannerTaskService(repository.Object);
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object);
 
         // Act
         var result = await service.GetByIdAsync(taskId);
@@ -73,16 +84,16 @@ public class PlannerTaskServiceTests
         // Assert
         Assert.Null(result);
     }
-    
+
     [Fact]
-    public async Task CreateAsync_SetsIdAndCreatedAt()
+    public async Task CreateAsync_SetsIdCreatedAtAndUserId()
     {
         // Arrange
         var taskToCreate = new PlannerTask
         {
             Id = Guid.Empty,
             Title = "New Task",
-            CreatedAt = default
+            CreatedAt = default,
         };
 
         PlannerTask? capturedTask = null;
@@ -92,7 +103,7 @@ public class PlannerTaskServiceTests
             .Callback<PlannerTask, CancellationToken>((task, _) => capturedTask = task)
             .ReturnsAsync((PlannerTask t, CancellationToken _) => t);
 
-        var service = new PlannerTaskService(mockRepo.Object);
+        var service = new PlannerTaskService(mockRepo.Object, CreateCurrentUserMock().Object);
 
         // Act
         await service.CreateAsync(taskToCreate);
@@ -101,8 +112,9 @@ public class PlannerTaskServiceTests
         Assert.NotNull(capturedTask);
         Assert.NotEqual(Guid.Empty, capturedTask.Id);
         Assert.NotEqual(default, capturedTask.CreatedAt);
+        Assert.Equal(TestUserId, capturedTask.UserId);
     }
-    
+
     [Fact]
     public async Task DeleteAsync_CallsRepository()
     {
@@ -110,14 +122,14 @@ public class PlannerTaskServiceTests
         var taskId = Guid.NewGuid();
         var mockRepo = new Mock<IPlannerTaskRepository>();
 
-        var service = new PlannerTaskService(mockRepo.Object);
+        var service = new PlannerTaskService(mockRepo.Object, CreateCurrentUserMock().Object);
 
         // Act
         await service.DeleteAsync(taskId);
 
         // Assert
         mockRepo.Verify(
-            r => r.DeleteAsync(taskId, It.IsAny<CancellationToken>()),
+            r => r.DeleteAsync(taskId, TestUserId, It.IsAny<CancellationToken>()),
             Times.Once);
     }
 }
