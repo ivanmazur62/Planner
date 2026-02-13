@@ -3,7 +3,7 @@ using Planner.API.Models;
 
 namespace Planner.API.Validators;
 
-public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
+public sealed class RegisterRequestValidator : AbstractValidator<RegisterRequest>
 {
     public RegisterRequestValidator()
     {

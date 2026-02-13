@@ -3,7 +3,7 @@ using Planner.API.Models.Requests;
 
 namespace Planner.API.Validators;
 
-public class UpdatePlannerTaskRequestValidator : AbstractValidator<UpdatePlannerTaskRequest>
+public sealed class UpdatePlannerTaskRequestValidator : AbstractValidator<UpdatePlannerTaskRequest>
 {
     public UpdatePlannerTaskRequestValidator()
     {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Planner.API.Filters;
 
-public class ValidationFilter(IServiceProvider serviceProvider) : IAsyncActionFilter
+public sealed class ValidationFilter(IServiceProvider serviceProvider) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {

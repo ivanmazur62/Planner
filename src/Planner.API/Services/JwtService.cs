@@ -7,7 +7,7 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace Planner.API.Services;
 
-public class JwtService(IConfiguration configuration) : IJwtService
+public sealed class JwtService(IConfiguration configuration) : IJwtService
 {
     public string GenerateToken(string userId, string email)
     {

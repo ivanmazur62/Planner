@@ -18,7 +18,7 @@ namespace Planner.API.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/auth")]
-public class AuthController(
+public sealed class AuthController(
     UserManager<ApplicationUser> userManager, 
     IJwtService jwtService,
     ILogger<AuthController> logger): ControllerBase

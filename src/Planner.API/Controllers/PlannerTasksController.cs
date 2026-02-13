@@ -11,7 +11,7 @@ namespace Planner.API.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/planner-tasks")]
-public class PlannerTasksController(IPlannerTaskService service, ILogger<PlannerTasksController> logger) : ControllerBase
+public sealed class PlannerTasksController(IPlannerTaskService service, ILogger<PlannerTasksController> logger) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<PlannerTaskDto>>> GetAll(CancellationToken cancellationToken)

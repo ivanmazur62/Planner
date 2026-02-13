@@ -1,6 +1,6 @@
 namespace Planner.Core.Entities;
 
-public class PlannerTask
+public sealed class PlannerTask
 {
     public Guid      Id          { get; set; }
     public string    Title       { get; set; } =  string.Empty;
