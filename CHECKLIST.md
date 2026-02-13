@@ -32,7 +32,7 @@
 - [x] **2.4.5** IJwtService — винесення генерації JWT з AuthController в окремий сервіс
 - [x] **2.4.6** Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо для Program.cs
 - [x] **2.4.7** Exception handler — глобальна обробка помилок, ProblemDetails
-- [ ] **2.4.8** Health checks — `/health` для PostgreSQL
+- [x] **2.4.8** Health checks — `/health` для PostgreSQL
 - [ ] **2.4.9** Логування — ILogger у сервісах та контролерах, структуровані повідомлення
 - [ ] **2.4.10** Маршрути — явні `[Route("api/...")]`, lowercase URLs
 - [ ] **2.4.11** CORS — налаштування для Blazor-клієнта
@@ -66,7 +66,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.4.8 — Health checks (потім 2.4.9 Логування…).
+**Що робити зараз:** Фаза 2.4.9 — Логування (потім 2.4.10 Маршрути…).
 
 ---
 
@@ -92,6 +92,7 @@
 - [x] IJwtService — винесення генерації JWT в окремий сервіс
 - [x] Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо
 - [x] Exception handler — глобальна обробка помилок, ProblemDetails
+- [x] Health checks — `/health` для PostgreSQL
 - [x] UserId — ICurrentUserService, прив’язка задач до користувача, фільтрація в репозиторії
 
 ---

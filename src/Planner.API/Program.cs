@@ -12,6 +12,7 @@ builder.Services.AddPlannerAuthentication(builder.Configuration);
 builder.Services.AddPlannerSwagger();
 builder.Services.AddPlannerValidation();
 builder.Services.AddPlannerControllers();
+builder.Services.AddPlannerHealthChecks(builder.Configuration);
 
 var app = builder.Build();
 
@@ -31,5 +32,6 @@ if (!app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

@@ -141,4 +141,15 @@ public static class ServiceCollectionExtensions
         });
         return services;
     }
+
+    public static IServiceCollection AddPlannerHealthChecks(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("DefaultConnection is not configured");
+        services.AddHealthChecks()
+            .AddNpgSql(connectionString, name: "postgres");
+        
+        return services;
+    }
 }
