@@ -1,6 +1,6 @@
 # AI Planner
 
-Планувальник часу з AI-рекомендаціями
+Планувальник часу з AI-рекомендаціями.
 
 ## Документація
 
@@ -10,4 +10,20 @@
 
 ## Стек
 
-ASP.NET Core, EF Core, PostgreSQL, Blazor, MAUI, OpenAI.
+**Backend:** ASP.NET Core 8, EF Core, PostgreSQL, Swagger  
+**Auth:** ASP.NET Core Identity, JWT, Google OAuth  
+**Tools:** FluentValidation, Docker Compose, xUnit, Moq  
+
+**Плановано:** Blazor WebAssembly, .NET MAUI, OpenAI, Hangfire/RabbitMQ
+
+## Запуск
+
+```bash
+# PostgreSQL
+docker compose up -d
+
+# API
+cd src/Planner.API && dotnet run
+```
+
+Swagger: `https://localhost:7055/swagger`

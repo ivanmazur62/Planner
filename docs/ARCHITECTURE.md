@@ -11,9 +11,9 @@ Core → Infrastructure → Services → API
 | Шар | Проєкт | Призначення |
 |-----|--------|-------------|
 | **Core** | Planner.Core | Домен, сутності, інтерфейси. Без зовнішніх залежностей. |
-| **Infrastructure** | Planner.Infrastructure | EF Core, репозиторії, зовнішні сервіси. Реалізує інтерфейси з Core. |
-| **Services** | Planner.Services | Бізнес-логіка, AI. Залежить від Core. |
-| **API** | Planner.API | Контролери, DI, middleware. Точка входу. |
+| **Infrastructure** | Planner.Infrastructure | EF Core, репозиторії, Identity. Реалізує інтерфейси з Core. |
+| **Services** | Planner.Services | Бізнес-логіка, AI (пізніше). Залежить від Core. |
+| **API** | Planner.API | Контролери, DI, middleware, валідація. Точка входу. |
 
 ### Залежності
 
@@ -27,19 +27,19 @@ Infrastructure → Core
 
 ---
 
-## Структура (планована)
+## Структура проєкту
 
 ```
 Planner/
 ├── src/
-│   ├── Planner.API/              # ASP.NET Core Web API
-│   ├── Planner.Core/            # Домен, інтерфейси
-│   ├── Planner.Infrastructure/  # EF, репозиторії
-│   ├── Planner.Services/       # Бізнес-логіка, AI
-│   ├── Planner.Web/              # Blazor WebAssembly (пізніше)
-│   └── Planner.Desktop/         # .NET MAUI (пізніше)
+│   ├── Planner.API/              # ASP.NET Core Web API ✅
+│   ├── Planner.Core/             # Домен, інтерфейси ✅
+│   ├── Planner.Infrastructure/   # EF Core, репозиторії, Identity ✅
+│   ├── Planner.Services/        # Бізнес-логіка ✅
+│   ├── Planner.Web/              # Blazor WebAssembly (плановано)
+│   └── Planner.Desktop/          # .NET MAUI (плановано)
 ├── tests/
-│   └── Planner.API.Tests/
+│   └── Planner.API.Tests/       # xUnit, Moq, coverlet ✅
 ├── docs/
 ├── .cursor/rules/
 └── Planner.sln
@@ -49,14 +49,27 @@ Planner/
 
 ## Патерни
 
-- **Repository** — абстракція доступу до даних
+- **Repository** — абстракція доступу до даних (`IPlannerTaskRepository`)
 - **Dependency Injection** — впровадження залежностей через конструктор
-- **Services** — бізнес-логіка в окремих класах
+- **Services** — бізнес-логіка в окремих класах (`IPlannerTaskService`)
+- **DTO** — PlannerTaskDto, CreatePlannerTaskRequest, UpdatePlannerTaskRequest замість entity в API
+- **Current User** — `ICurrentUserService` для отримання UserId з JWT
+
+---
+
+## API
+
+- **Маршрути:** `api/planner-tasks`, `api/auth`, lowercase URLs
+- **Валідація:** FluentValidation для Request-моделей
+- **Помилки:** глобальний exception handler, ProblemDetails
+- **Документація:** Swagger/OpenAPI
+- **Health:** `/health` — перевірка PostgreSQL
 
 ---
 
 ## База даних
 
-- **СУБД:** PostgreSQL
-- **ORM:** Entity Framework Core
+- **СУБД:** PostgreSQL 16
+- **ORM:** Entity Framework Core (Npgsql)
 - **Міграції:** EF Core Migrations
+- **Identity:** ASP.NET Core Identity (ApplicationUser, AspNet*)
