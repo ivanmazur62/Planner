@@ -15,6 +15,8 @@ builder.Services.AddPlannerControllers();
 
 var app = builder.Build();
 
+app.UsePlannerExceptionHandler(); 
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
