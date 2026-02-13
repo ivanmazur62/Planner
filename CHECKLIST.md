@@ -26,7 +26,7 @@
 ### Фаза 2.4 — Покращення API
 
 - [x] **2.4.1** UserId — прив’язка задач до користувача, ICurrentUserService, фільтрація в репозиторії
-- [ ] **2.4.2** User Secrets — винесення JWT Key та Google ClientSecret з appsettings
+- [x] **2.4.2** User Secrets — винесення JWT Key та Google ClientSecret з appsettings
 - [ ] **2.4.3** DTO — PlannerTaskDto, CreatePlannerTaskRequest, UpdatePlannerTaskRequest замість entity
 - [ ] **2.4.4** Валідація — DataAnnotations або FluentValidation для Request-моделей
 - [ ] **2.4.5** IJwtService — винесення генерації JWT з AuthController в окремий сервіс
@@ -66,7 +66,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.4.2 — User Secrets (потім 2.4.3 DTO, 2.4.4 Валідація…).
+**Що робити зараз:** Фаза 2.4.3 — DTO (потім 2.4.4 Валідація…).
 
 ---
 
@@ -86,6 +86,7 @@
 - [x] ASP.NET Core Identity — ApplicationUser, таблиці AspNet*
 - [x] JWT автентифікація — AuthController, [Authorize], Swagger Bearer
 - [x] Google OAuth — вхід через Google, JWT після callback
+- [x] User Secrets — Jwt:Key, Google ClientId/ClientSecret винесено в user-secrets
 - [x] UserId — ICurrentUserService, прив’язка задач до користувача, фільтрація в репозиторії
 
 ---
