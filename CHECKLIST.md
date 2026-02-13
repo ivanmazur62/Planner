@@ -29,7 +29,7 @@
 - [x] **2.4.2** User Secrets — винесення JWT Key та Google ClientSecret з appsettings
 - [x] **2.4.3** DTO — PlannerTaskDto, CreatePlannerTaskRequest, UpdatePlannerTaskRequest замість entity
 - [x] **2.4.4** Валідація — DataAnnotations або FluentValidation для Request-моделей
-- [ ] **2.4.5** IJwtService — винесення генерації JWT з AuthController в окремий сервіс
+- [x] **2.4.5** IJwtService — винесення генерації JWT з AuthController в окремий сервіс
 - [ ] **2.4.6** Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо для Program.cs
 - [ ] **2.4.7** Exception handler — глобальна обробка помилок, ProblemDetails
 - [ ] **2.4.8** Health checks — `/health` для PostgreSQL
@@ -66,7 +66,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.4.5 — IJwtService (потім 2.4.6 Extension methods…).
+**Що робити зараз:** Фаза 2.4.6 — Extension methods (потім 2.4.7 Exception handler…).
 
 ---
 
@@ -89,6 +89,7 @@
 - [x] User Secrets — Jwt:Key, Google ClientId/ClientSecret винесено в user-secrets
 - [x] DTO — PlannerTaskDto, CreatePlannerTaskRequest, UpdatePlannerTaskRequest
 - [x] Валідація — FluentValidation для Request-моделей
+- [x] IJwtService — винесення генерації JWT в окремий сервіс
 - [x] UserId — ICurrentUserService, прив’язка задач до користувача, фільтрація в репозиторії
 
 ---
