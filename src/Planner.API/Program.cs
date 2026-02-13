@@ -1,10 +1,13 @@
 using System.Text;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Planner.API.Filters;
+using Planner.API.Validators;
 using Planner.API.Services;
 using Planner.Core.Interfaces;
 using Planner.Infrastructure.Data;
@@ -87,7 +90,11 @@ builder.Services.AddAuthentication(options =>
         options.CorrelationCookie.SameSite = SameSiteMode.Lax;
         options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
     });
-builder.Services.AddControllers();
+builder.Services.AddValidatorsFromAssemblyContaining<CreatePlannerTaskRequestValidator>();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
 
 var app = builder.Build();
 
