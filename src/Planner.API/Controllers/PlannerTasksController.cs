@@ -11,7 +11,7 @@ namespace Planner.API.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class PlannerTasksController(IPlannerTaskService service) : ControllerBase
+public class PlannerTasksController(IPlannerTaskService service, ILogger<PlannerTasksController> logger) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<PlannerTaskDto>>> GetAll(CancellationToken cancellationToken)
@@ -35,6 +35,7 @@ public class PlannerTasksController(IPlannerTaskService service) : ControllerBas
         if(request == null)
             return BadRequest();
         
+        logger.LogDebug("Creating task with title {Title}", request.Title);
         var created = await service.CreateAsync(request.ToEntity(), cancellationToken);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created.ToDto());
     }

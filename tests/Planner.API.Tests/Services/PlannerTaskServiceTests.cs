@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Planner.Core.Entities;
 using Planner.Core.Interfaces;
 using Planner.Services;
@@ -9,6 +10,11 @@ public class PlannerTaskServiceTests
 {
     private const string TestUserId = "test-user-id";
 
+    private static Mock<ILogger<PlannerTaskService>> CreateLoggerMock()
+    {
+        return new Mock<ILogger<PlannerTaskService>>();
+    }
+    
     private static Mock<ICurrentUserService> CreateCurrentUserMock()
     {
         var mock = new Mock<ICurrentUserService>();
@@ -25,8 +31,8 @@ public class PlannerTaskServiceTests
         repository
             .Setup(r => r.GetAllAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<PlannerTask>());
-
-        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object);
+        
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object, CreateLoggerMock().Object);
 
         //Act
         var result = await service.GetAllAsync();
@@ -55,7 +61,7 @@ public class PlannerTaskServiceTests
             .Setup(r => r.GetByIdAsync(taskId, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(expectedTask);
 
-        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object);
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object, CreateLoggerMock().Object);
 
         //Act
         var result = await service.GetByIdAsync(taskId);
@@ -76,7 +82,7 @@ public class PlannerTaskServiceTests
             .Setup(r => r.GetByIdAsync(taskId, It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((PlannerTask?)null);
 
-        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object);
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object, CreateLoggerMock().Object);
 
         // Act
         var result = await service.GetByIdAsync(taskId);
@@ -97,13 +103,13 @@ public class PlannerTaskServiceTests
         };
 
         PlannerTask? capturedTask = null;
-        var mockRepo = new Mock<IPlannerTaskRepository>();
-        mockRepo
+        var repository = new Mock<IPlannerTaskRepository>();
+        repository
             .Setup(r => r.AddAsync(It.IsAny<PlannerTask>(), It.IsAny<CancellationToken>()))
             .Callback<PlannerTask, CancellationToken>((task, _) => capturedTask = task)
             .ReturnsAsync((PlannerTask t, CancellationToken _) => t);
 
-        var service = new PlannerTaskService(mockRepo.Object, CreateCurrentUserMock().Object);
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object, CreateLoggerMock().Object);
 
         // Act
         await service.CreateAsync(taskToCreate);
@@ -120,15 +126,15 @@ public class PlannerTaskServiceTests
     {
         // Arrange
         var taskId = Guid.NewGuid();
-        var mockRepo = new Mock<IPlannerTaskRepository>();
+        var repository = new Mock<IPlannerTaskRepository>();
 
-        var service = new PlannerTaskService(mockRepo.Object, CreateCurrentUserMock().Object);
+        var service = new PlannerTaskService(repository.Object, CreateCurrentUserMock().Object, CreateLoggerMock().Object);
 
         // Act
         await service.DeleteAsync(taskId);
 
         // Assert
-        mockRepo.Verify(
+        repository.Verify(
             r => r.DeleteAsync(taskId, TestUserId, It.IsAny<CancellationToken>()),
             Times.Once);
     }

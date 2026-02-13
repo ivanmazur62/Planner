@@ -14,7 +14,8 @@ public sealed class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<Exc
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Unhandled exception: {Message}", e.Message);
+            logger.LogError(e, "Unhandled exception. Path={Path}, Method={Method}",
+                context.Request.Path, context.Request.Method);
             await HandleExceptionAsync(context, e);
         }
     }

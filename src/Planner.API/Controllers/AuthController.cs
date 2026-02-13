@@ -18,23 +18,26 @@ namespace Planner.API.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(UserManager<ApplicationUser> userManager, IJwtService jwtService): ControllerBase
+public class AuthController(
+    UserManager<ApplicationUser> userManager, 
+    IJwtService jwtService,
+    ILogger<AuthController> logger): ControllerBase
 {
     [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
-        var user = new ApplicationUser
-        {
-            UserName = request.UserName,
-            Email = request.Email,
-        };
-
+        var user = new ApplicationUser {UserName = request.UserName, Email = request.Email,};
         var result = await userManager.CreateAsync(user, request.Password);
         
         if(!result.Succeeded)
+        {
+            logger.LogWarning("Registration failed for email {Email}: {Errors}",
+                request.Email, string.Join("; ", result.Errors.Select(e => e.Description)));
             return BadRequest(result.Errors);
+        }
         
+        logger.LogInformation("User registered. UserId={UserId}, Email={Email}", user.Id, user.Email);
         return Created(string.Empty, new { id = user.Id });
     }
 
@@ -44,15 +47,21 @@ public class AuthController(UserManager<ApplicationUser> userManager, IJwtServic
     {
         var user = await userManager.FindByEmailAsync(request.Email);
         if (user == null)
+        {
+            logger.LogWarning("Login failed: user not found for email {Email}", request.Email);
             return Unauthorized();
+        }
 
         var isValid = await userManager.CheckPasswordAsync(user, request.Password);
         if (!isValid)
-            return  Unauthorized();
-        
+        {
+            logger.LogWarning("Login failed: invalid password for email {Email}", request.Email);
+            return Unauthorized();
+        }
+
+        logger.LogInformation("User logged in. UserId={UserId}, Email={Email}", user.Id, user.Email);
         var token = jwtService.GenerateToken(user.Id, user.Email ?? "");
         return Ok(new LoginResponse(token));
-
     }
     
     [AllowAnonymous]
@@ -90,6 +99,9 @@ public class AuthController(UserManager<ApplicationUser> userManager, IJwtServic
         }
         
         var token = jwtService.GenerateToken(user.Id, user.Email ?? "");
+        
+        logger.LogInformation("User logged in via Google. UserId={UserId}, Email={Email}", user.Id, user.Email);
+        
         return Ok(new LoginResponse(token));
     }
 }

@@ -1,10 +1,14 @@
+using Microsoft.Extensions.Logging;
 using Planner.Core.Entities;
 using Planner.Core.Interfaces;
 using Planner.Services.Interfaces;
 
 namespace Planner.Services;
 
-public sealed class PlannerTaskService(IPlannerTaskRepository taskRepository, ICurrentUserService currentUser) : IPlannerTaskService
+public sealed class PlannerTaskService(
+    IPlannerTaskRepository taskRepository, 
+    ICurrentUserService currentUser,
+    ILogger<PlannerTaskService> logger) : IPlannerTaskService
 {
     private string GetUserId()
     {
@@ -44,7 +48,10 @@ public sealed class PlannerTaskService(IPlannerTaskRepository taskRepository, IC
         plannerTask.UserId = userId;
         plannerTask.Id = Guid.NewGuid();
         plannerTask.CreatedAt = DateTime.UtcNow;
-        return await taskRepository.AddAsync(plannerTask, cancellationToken);
+        var created = await taskRepository.AddAsync(plannerTask, cancellationToken);
+        logger.LogInformation("Task created. TaskId={TaskId}, UserId={UserId}, Title={Title}",
+            created.Id, userId, created.Title);
+        return created;
     }
 
     public async Task<PlannerTask> UpdateAsync(PlannerTask plannerTask, CancellationToken cancellationToken = default)
@@ -54,12 +61,15 @@ public sealed class PlannerTaskService(IPlannerTaskRepository taskRepository, IC
             throw new UnauthorizedAccessException("You can only update your own tasks");
 
         plannerTask.UpdatedAt = DateTime.UtcNow;
-        return await taskRepository.UpdateAsync(plannerTask, cancellationToken);
+        var updated = await taskRepository.UpdateAsync(plannerTask, cancellationToken);
+        logger.LogInformation("Task updated. TaskId={TaskId}, UserId={UserId}", updated.Id, userId);
+        return updated;
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var userId = GetUserId();
         await taskRepository.DeleteAsync(id, userId, cancellationToken);
+        logger.LogInformation("Task deleted. TaskId={TaskId}, UserId={UserId}", id, userId);
     }
 }

@@ -33,7 +33,7 @@
 - [x] **2.4.6** Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо для Program.cs
 - [x] **2.4.7** Exception handler — глобальна обробка помилок, ProblemDetails
 - [x] **2.4.8** Health checks — `/health` для PostgreSQL
-- [ ] **2.4.9** Логування — ILogger у сервісах та контролерах, структуровані повідомлення
+- [x] **2.4.9** Логування — ILogger у сервісах та контролерах, структуровані повідомлення
 - [ ] **2.4.10** Маршрути — явні `[Route("api/...")]`, lowercase URLs
 - [ ] **2.4.11** CORS — налаштування для Blazor-клієнта
 - [ ] **2.4.12** Unit of Work — опційно, для складних транзакцій
@@ -66,7 +66,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.4.9 — Логування (потім 2.4.10 Маршрути…).
+**Що робити зараз:** Фаза 2.4.10 — Маршрути (потім 2.4.11 CORS…).
 
 ---
 
@@ -93,6 +93,7 @@
 - [x] Extension methods — AddPlannerDbContext, AddPlannerAuthentication тощо
 - [x] Exception handler — глобальна обробка помилок, ProblemDetails
 - [x] Health checks — `/health` для PostgreSQL
+- [x] Логування — ILogger у PlannerTaskService, AuthController
 - [x] UserId — ICurrentUserService, прив’язка задач до користувача, фільтрація в репозиторії
 
 ---
