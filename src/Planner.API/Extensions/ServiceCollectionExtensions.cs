@@ -152,4 +152,23 @@ public static class ServiceCollectionExtensions
         
         return services;
     }
+
+    public static IServiceCollection AddPlannerCors(this IServiceCollection services, IConfiguration configuration)
+    {
+        var allowedOrigins = configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+                             ?? ["https://localhost:5001", "https://localhost:5000"];
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("Planner", policy =>
+            {
+                policy.WithOrigins(allowedOrigins)
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+        
+        return services;
+    }
 }

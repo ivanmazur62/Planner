@@ -15,10 +15,11 @@ builder.Services.AddPlannerSwagger();
 builder.Services.AddPlannerValidation();
 builder.Services.AddPlannerControllers();
 builder.Services.AddPlannerHealthChecks(builder.Configuration);
+builder.Services.AddPlannerCors(builder.Configuration);
 
 var app = builder.Build();
 
-app.UsePlannerExceptionHandler(); 
+app.UsePlannerExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
@@ -26,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("Planner");
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
