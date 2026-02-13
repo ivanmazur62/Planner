@@ -1,6 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -77,5 +79,43 @@ public class AuthController(UserManager<ApplicationUser> userManager, IConfigura
             signingCredentials: credentials);
         
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    
+    [AllowAnonymous]
+    [HttpGet("google")]
+    public IActionResult GoogleLogin()
+    {
+        var redirectUrl = Url.Action(nameof(GoogleCallback), "Auth");
+        var properties = new AuthenticationProperties {RedirectUri = redirectUrl};
+        return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("google-callback")]
+    public async Task<IActionResult> GoogleCallback(CancellationToken cancellationToken)
+    {
+        var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+        if (!result.Succeeded)
+            return Unauthorized();
+        
+        var email = result.Principal?.FindFirst(ClaimTypes.Email)?.Value;
+        var name = result.Principal?.FindFirst(ClaimTypes.Name)?.Value;
+        
+        if(string.IsNullOrEmpty(email))
+            return BadRequest("Email not received from Google");
+        
+        var user = await userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = new ApplicationUser
+            {
+                UserName = email.Split("@").First(),
+                Email = email,
+            };
+            await userManager.CreateAsync(user);
+        }
+        
+        var token = GenerateJwtToken(user);
+        return Ok(new LoginResponse(token));
     }
 }

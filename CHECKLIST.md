@@ -21,7 +21,7 @@
 
 - [x] **2.1** ASP.NET Core Identity
 - [x] **2.2** JWT автентифікація
-- [ ] **2.3** Google OAuth
+- [x] **2.3** Google OAuth
 
 ### Фаза 3 — Web UI
 
@@ -51,7 +51,7 @@
 
 ## Поточний крок
 
-**Що робити зараз:** Фаза 2.3 — Google OAuth.
+**Що робити зараз:** Фаза 3.1 — Planner.Web (Blazor WebAssembly).
 
 ---
 
@@ -70,6 +70,7 @@
 - [x] Planner.API.Tests — PlannerTaskService unit tests (xUnit, Moq)
 - [x] ASP.NET Core Identity — ApplicationUser, таблиці AspNet*
 - [x] JWT автентифікація — AuthController, [Authorize], Swagger Bearer
+- [x] Google OAuth — вхід через Google, JWT після callback
 
 ---
 
